@@ -1,19 +1,39 @@
 angular.module('secureme.controllers', [])
 
-.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform) {
+.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage) {
     
+    $scope.newPhone='';
     $scope.buttons = [{id:1,position:"before"},{id:2,position:"before"},{id:3,position:"current"},{position:"after"}];
-    
+    $scope.state = "idle";
     $scope.init = function()
     {
         var items = document.querySelectorAll('.circle a');
-
-    for(var i = 0, l = items.length; i < l; i++) {
-      items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
-
-      items[i].style.top = (60 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
-    }
+        for(var i = 0, l = items.length; i < l; i++) 
+        {
+            items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+            items[i].style.top = (60 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
+        }
+        
+        $scope.numbers = storage.getPhoneNumbers();
+        $scope.mails = storage.getMailAddresses();
     }();
+    
+    $scope.changeState = function(state)
+    {
+        $scope.state = state;
+    };
+    
+    $scope.addPhone = function()
+    {
+        var number = $scope.newPhone;
+        if(""+number.length!=10)
+            alert("Ceci n'est pas un numéro valide!");
+        else
+        {
+            $scope.numbers.push(number);
+            storage.setPhoneNumbers($scope.numbers);
+        }
+    }
     
     
     $scope.changeButton = function(index,direction)
@@ -58,6 +78,10 @@ angular.module('secureme.controllers', [])
     $scope.settings = function()
     {
         $scope.open = !$scope.open;
+        if($scope.open)
+            $scope.state = 'settings';
+        else
+            $scope.state = 'idle';
     }
 })
 

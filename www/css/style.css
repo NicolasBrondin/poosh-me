@@ -42,7 +42,7 @@ ion-content
     transition: all 1s;
 }
 
-button
+.menu-button
 {
     position: absolute;
     border-radius: 50%;
@@ -53,7 +53,7 @@ button
     
 }
 
-button:hover
+.menu-button:hover
 {
     background: #c0392b;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
@@ -62,7 +62,7 @@ button:hover
 
 @media all and (orientation:portrait) {
     
-    button
+    .menu-button
     {
         width: 50vw;
         height: 50vw;
@@ -74,7 +74,7 @@ button:hover
 }
 @media all and (orientation:landscape) {
 
-    button
+    .menu-button
     {
         width: 50vh;
         height: 50vh;
