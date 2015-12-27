@@ -18,28 +18,6 @@ ion-content
     text-align: center;
     background: #2c3e50;
     border:none;
-    margin: 0;
-    padding: 0 !important;
-}
-
-.before
-{
-    margin-left:-150%;
-}
-
-.current
-{
-    -webkit-transition: all 1s; /* Safari */
-    -moz-transition: all 1s; /* Safari */
-    transition: all 1s;
-}
-
-.after
-{
-    margin-left:150%;
-    -webkit-transition: all 1s; /* Safari */
-    -moz-transition: all 1s; /* Safari */
-    transition: all 1s;
 }
 
 .menu-button
@@ -59,6 +37,24 @@ ion-content
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
+.settings-button
+{
+    position: absolute;
+    border-radius:50%;
+    background:#FFA500;
+    border:none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    color:white;
+    display: block;
+    text-decoration: none;
+    vertical-align: middle;
+}
+
+.settings-button:hover
+{
+    background: #5DA000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
 
 @media all and (orientation:portrait) {
     
@@ -69,6 +65,15 @@ ion-content
         top: calc(50% - 25vw);
         left: calc(50% - 25vw);
         font-size: 25vw;
+    }
+    
+    .settings-button
+    {
+        width: 20vw;
+        height: 20vw;
+        top: calc(90% - 10vw);
+        left: calc(80% - 10vw);
+        font-size: 10vw;
     }
 
 }
@@ -83,54 +88,15 @@ ion-content
         font-size: 25vh;
     }
     
-}
-
-
-.circular-menu {
-  width: 75vh;
-  height: 75vh;
-    margin: auto;
-  position: relative;
-}
-
-.circle {
-  width: 75vh;
-  height: 75vh;
-  opacity: 0;
-  
-  -webkit-transform: scale(0);
-  -moz-transform: scale(0);
-  transform: scale(0);
-
-  -webkit-transition: all 0.4s ease-out;
-  -moz-transition: all 0.4s ease-out;
-  transition: all 0.4s ease-out;
-}
-
-.open.circle {
-  opacity: 1;
-
-  -webkit-transform: scale(1);
-  -moz-transform: scale(1);
-  transform: scale(1);
-}
-
-.circle a {
-  text-decoration: none;
-  color: #ecf0f1;
-  display: block;
-  height: 40px;
-  width: 40px;
-  line-height: 40px;
-  margin-left: -20px;
-  margin-top: -20px;
-  position: absolute;
-  text-align: center;
-
-}
-
-.circle a:hover {
-  color: #eef;
+    .settings-button
+    {
+        width: 20vh;
+        height: 20vh;
+        top: calc(80% - 10vh);
+        left: calc(90% - 10vh);
+        font-size: 10vh;
+    }
+    
 }
 
 h1, h2
@@ -154,3 +120,39 @@ h2
     padding-bottom: 15px;
 }
 
+.contacts
+{
+    margin-left:30%;
+    margin-right:30%;
+    text-align: center;
+}
+
+.contact
+{
+    height: 50px;
+    margin:10px;
+    font-size: 25px;
+}
+
+.contact-key
+{
+    float: left;
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #213242;
+    line-height: 50px;
+}
+
+.contact-value
+{
+    float:left;
+    padding-left:20px;
+    padding-right:20px;
+    display: inline-block;
+    background: #213242;
+    border-radius: 25px;
+    height: 100%;
+    margin-left: 10px;
+    line-height: 50px;
+}

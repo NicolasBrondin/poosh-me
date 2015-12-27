@@ -2,20 +2,7 @@
     <ion-content class="padding center" >
         <h1>Double tap pour envoyer une alerte</h1>
         <br>
-        <nav class="circular-menu"  >
-            <div class="circle" ng-class="{'open':open}">
-                <a href="" ng-click="changeState('addMail')" class="ion-email fa-4x"></a>
-                <a href="" ng-click="changeState('addPhone')" class="ion-chatbox-working fa-4x"></a>
-                <a href="" ng-click="changeState('addPhone')" class="fa fa-phone fa-4x"></a>
-                <a href="" ng-click="changeState('addPhone')" class="fa fa-facebook fa-4x"></a>
-                <a href="" ng-click="changeState('addPhone')" class="fa fa-twitter fa-4x"></a>
-            </div>
-            
-        </nav>
-        <button ng-repeat="button in buttons" class="menu-button icon fa fa-hand-o-down" on-click="changeButton($index)" on-double-tap="sendSMS()" on-swipe-left="changeButton($index,'left')" on-swipe-right="changeButton($index,'right')" on-hold="settings()" ng-class="{'before':button.position=='before','current':button.position=='current', 'after':button.position=='after'}"></button>
-    <h2 ng-if="state=='idle'">Faire un appui long pour paramétrer les alertes.</h2>
-    <h2 ng-if="state=='addPhone'"><input type="text" ng-model="newPhone" placeholder="0610386151"/><button ng-click="addPhone()">Ajouter</button></h2>
-        <h2 ng-if="state=='addMail'"><input type="email" ng-model="newMail" placeholder="xzy@gmail.com"/><button ng-click="addMail()">Ajouter</button></h2>
-    </ion-content>
-    
+        <button class="menu-button icon fa fa-hand-o-down" on-double-tap="sendSMS()"></button>
+        <a href="#/settings" class="settings-button icon fa fa-settings">S</a>
+   </ion-content>
 </ion-view>

@@ -37,6 +37,12 @@ angular.module('SecureMe', ['ionic', 'secureme.controllers', 'secureme.services'
     templateUrl: 'templates/dashboard.html',
     controller: 'DashCtrl'
   })
+  
+  .state('settings', {
+    url: '/settings',
+    templateUrl: 'templates/settings.html',
+    controller: 'SettingsCtrl'
+  })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');

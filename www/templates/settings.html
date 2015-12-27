@@ -1,0 +1,19 @@
+<ion-view>
+    <ion-content class="padding center" >
+        <h1><a href="#/"><-</a>Destinataires...</h1>
+        <div class="contacts">
+            <div class="contact" ng-if="plus">
+                <div class="contact-key">T</div> 
+                <div class="contact-key">S</div> 
+                <div class="contact-key">M</div>
+                <div class="contact-value"><input type="text"/></div>
+                <div class="contact-key" on-tap="add()">OK</div>
+            </div>
+            <div ng-repeat="contact in contacts" class="contact">
+                <div class="contact-key">{{contact.key}}</div>
+                <div class="contact-value" on-hold="toDelete($index)">{{contact.value}} <a ng-if="contact.delete==true" ng-click="delete($index)">Delete</a></div>
+            </div>
+        </div>
+        <a on-tap="plus=!plus" class="settings-button icon fa fa-settings">+</a>
+   </ion-content>
+</ion-view>

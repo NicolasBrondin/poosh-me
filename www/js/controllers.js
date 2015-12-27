@@ -3,25 +3,12 @@ angular.module('secureme.controllers', [])
 .controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage) {
     
     $scope.newPhone='';
-    $scope.buttons = [{id:1,position:"before"},{id:2,position:"before"},{id:3,position:"current"},{position:"after"}];
-    $scope.state = "idle";
     $scope.init = function()
     {
-        var items = document.querySelectorAll('.circle a');
-        for(var i = 0, l = items.length; i < l; i++) 
-        {
-            items[i].style.left = (50 - 35*Math.cos(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
-            items[i].style.top = (60 + 35*Math.sin(-0.5 * Math.PI - 2*(1/l)*i*Math.PI)).toFixed(4) + "%";
-        }
-        
         $scope.numbers = storage.getPhoneNumbers();
         $scope.mails = storage.getMailAddresses();
     }();
     
-    $scope.changeState = function(state)
-    {
-        $scope.state = state;
-    };
     
     $scope.addPhone = function()
     {
@@ -35,33 +22,6 @@ angular.module('secureme.controllers', [])
         }
     }
     
-    
-    $scope.changeButton = function(index,direction)
-    {
-        $scope.open=false;
-        var length=$scope.buttons.length;
-        if(direction=="right")
-        {
-            $scope.buttons[index].position = "after";
-            if(index>0)
-                $scope.buttons[index-1%length].position = "current";
-            else
-                $scope.buttons[length-1].position = "current";
-            $scope.buttons[(index+1)%length].position = "before";
-        }
-        else
-        {
-            $scope.buttons[index].position = "before";
-            
-            $scope.buttons[index+1%length].position = "current";
-            
-            if(index<length)
-                $scope.buttons[(index-1)%length].position = "after";
-            else
-                $scope.buttons[0].position = "after";
-        }
-        console.log(index);
-    }
     $scope.sendSMS = function()
     {
         console.log("sending SMS...");
@@ -84,4 +44,26 @@ angular.module('secureme.controllers', [])
             $scope.state = 'idle';
     }
 })
+
+.controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage) {
+    
+ $scope.contacts=[
+     {key:"T",value:"0610386151"},
+     {key:"S",value:"0617886725"},
+     {key:"M",value:"MrBrondinNicolas@gmail.com"}
+];
+    
+$scope.toDelete = function(index)
+ {
+     console.log(index);
+     $scope.contacts[index].delete = true;
+ };
+ 
+ $scope.delete = function(index)
+ {
+     console.log(index);
+     $scope.contacts.splice(index,1);
+ };
+})
+
 
