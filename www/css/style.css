@@ -2,7 +2,6 @@
 
 html, body
 {
-    background: #2c3e50;
     color:white;
 }
 
@@ -16,7 +15,7 @@ ion-nav-bar,ion-view
 ion-content
 {
     text-align: center;
-    background: #2c3e50;
+    background: #213242;
     border:none;
 }
 
@@ -39,21 +38,105 @@ ion-content
 
 .settings-button
 {
+    display: block;
     position: absolute;
     border-radius:50%;
-    background:#FFA500;
+    background:#e67e22;
     border:none;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     color:white;
-    display: block;
     text-decoration: none;
-    vertical-align: middle;
 }
 
 .settings-button:hover
 {
-    background: #5DA000;
+    background: #d35400;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+
+
+h1, h2
+{
+    color:white;
+}
+
+
+.contacts
+{
+    text-align: center;
+}
+
+.contact
+{
+    height: 50px;
+    margin:10px;
+    font-size: 20px;
+}
+
+.contact-key
+{
+    float: left;
+    width:50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #2c3e50;
+    line-height: 50px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.contact-value
+{
+    float:left;
+    padding-left:20px;
+    padding-right:20px;
+    display: inline-block;
+    background:  #2c3e50;
+    border-radius: 25px;
+    height: 100%;
+    line-height: 50px;
+    margin-left: 5px;
+}
+
+.validate
+{
+    color:#2ecc71;
+}
+
+.contacts input
+{
+    background:  #2c3e50;
+    font-size: 25px;
+    height: 100%;
+    
+}
+
+.help
+{
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    background: #2c3e50;
+    font-size: 2em;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 2em;
+}
+
+.call
+{
+    background: #27ae60;
+}
+
+.sms
+{
+    background: #16a085;
+}
+
+.mail
+{
+    background: #2980b9;
 }
 
 @media all and (orientation:portrait) {
@@ -74,7 +157,21 @@ ion-content
         top: calc(90% - 10vw);
         left: calc(80% - 10vw);
         font-size: 10vw;
+        line-height: 20vw;
     }
+    
+    .contact
+    {
+        max-width: 100%;
+    }
+    
+    .contact-value
+    {
+        max-width: 80%;
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+        
 
 }
 @media all and (orientation:landscape) {
@@ -95,64 +192,25 @@ ion-content
         top: calc(80% - 10vh);
         left: calc(90% - 10vh);
         font-size: 10vh;
+        line-height: 20vh;
     }
     
+    .help
+    {
+        max-width: 50%;
+    }
+    
+    .contacts
+    {
+        margin-left:25%;
+        margin-right:25%;
+    }
 }
 
-h1, h2
+.plus
 {
-    color:white;
-}
-
-h1
-{
-    font-size: 2em;
-    padding-top: 50px;
-    padding-bottom: 50px;
-}
-
-h2
-{
-    background: #34495e;
-    width:100%;
-    font-size: 1.6em;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-.contacts
-{
-    margin-left:30%;
-    margin-right:30%;
-    text-align: center;
-}
-
-.contact
-{
-    height: 50px;
-    margin:10px;
-    font-size: 25px;
-}
-
-.contact-key
-{
-    float: left;
-    width:50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #213242;
-    line-height: 50px;
-}
-
-.contact-value
-{
-    float:left;
-    padding-left:20px;
-    padding-right:20px;
-    display: inline-block;
-    background: #213242;
-    border-radius: 25px;
-    height: 100%;
-    margin-left: 10px;
-    line-height: 50px;
+    background: rgba(0,0,0,0.1);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius:25px;
 }

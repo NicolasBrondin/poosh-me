@@ -1,19 +1,29 @@
 <ion-view>
     <ion-content class="padding center" >
-        <h1><a href="#/"><-</a>Destinataires...</h1>
-        <div class="contacts">
-            <div class="contact" ng-if="plus">
-                <div class="contact-key">T</div> 
-                <div class="contact-key">S</div> 
-                <div class="contact-key">M</div>
-                <div class="contact-value"><input type="text"/></div>
+        <div class="help"><a href="#/" class="icon ion-android-arrow-back validate"></a>+ pour ajouter, appui long pour supprimer</div>
+        <div class="contacts plus" ng-if="plus">
+            <h2>Nouveau contact:</h2>
+            <div class="contact" >
+                <div class="contact-key" ng-click="newContact.key='call'" ng-class="{'call':newContact.key=='call'}"><span class="icon ion-ios-telephone"></span></div> 
+                <div class="contact-key" ng-click="newContact.key='sms'" ng-class="{'sms':newContact.key=='sms'}"><span class="icon ion-email"></span></div> 
+                <div class="contact-key" ng-click="newContact.key='mail'" ng-class="{'mail':newContact.key=='mail'}"><span class="ion-at"></span></div>
+            </div>
+            <div class="contact">
+                <div class="contact-value">
+                    <input type="text" placeholder="0612345678" ng-model="newContact.value" ng-if="newContact.key!='mail'"/>
+                    <input type="email" placeholder="john.doe@mail.com" ng-model="newContact.value" ng-if="newContact.key=='mail'"/>
+                </div>
                 <div class="contact-key" on-tap="add()">OK</div>
             </div>
+        </div>
+        <div class="contacts">
             <div ng-repeat="contact in contacts" class="contact">
-                <div class="contact-key">{{contact.key}}</div>
-                <div class="contact-value" on-hold="toDelete($index)">{{contact.value}} <a ng-if="contact.delete==true" ng-click="delete($index)">Delete</a></div>
+                <div class="contact-key call" ng-if="contact.key=='call'"><span class="icon ion-ios-telephone"></span></div>
+                <div class="contact-key sms" ng-if="contact.key=='sms'"><span class="icon ion-email"></div>
+                <div class="contact-key mail" ng-if="contact.key=='mail'"><span class="ion-at"></span></div>
+                <div class="contact-value" on-hold="toDelete($index)"><a ng-show="contact.delete==true" ng-click="delete($index)" class="icon ion-trash-a"> Supprimer</a> {{contact.value}} </div>
             </div>
         </div>
-        <a on-tap="plus=!plus" class="settings-button icon fa fa-settings">+</a>
+        <a on-tap="plus=!plus" class="settings-button icon ion-plus-round"></a>
    </ion-content>
 </ion-view>

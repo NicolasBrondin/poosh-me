@@ -45,25 +45,41 @@ angular.module('secureme.controllers', [])
     }
 })
 
-.controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage) {
+.controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout) {
+     $scope.newContact = {key:'call'};
+     $scope.contacts=[
+         {key:"call",value:"0610386151"},
+         {key:"sms",value:"0617886725"},
+         {key:"mail",value:"MrBrondinNicolas@gmail.com"}
+    ];
+
+    $scope.toDeleteCallback = function(id)
+    {
+         if($scope.contacts[id])
+         {
+             $scope.contacts[id].delete = false;
+         }
+    };
+
+    $scope.toDelete = function(index)
+     {
+         $scope.contacts[index].delete = true;
+         $scope.contacts[index].timer = $timeout($scope.toDeleteCallback,3000,true,index);
+     };
+
+     $scope.delete = function(index)
+     {
+         console.log(index);
+         $timeout.cancel($scope.contacts[index].timer);
+         $scope.contacts.splice(index,1);
+     };
     
- $scope.contacts=[
-     {key:"T",value:"0610386151"},
-     {key:"S",value:"0617886725"},
-     {key:"M",value:"MrBrondinNicolas@gmail.com"}
-];
-    
-$scope.toDelete = function(index)
- {
-     console.log(index);
-     $scope.contacts[index].delete = true;
- };
- 
- $scope.delete = function(index)
- {
-     console.log(index);
-     $scope.contacts.splice(index,1);
- };
+    $scope.add = function()
+    {
+        $scope.contacts.push($scope.newContact);
+        $scope.newContact = {key:'call'};
+        console.log($scope.contacts);
+    };
 })
 
 
