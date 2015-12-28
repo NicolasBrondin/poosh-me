@@ -1,13 +1,12 @@
 angular.module('secureme.services', []).service('storage', ['$window', function ($window) {
 
-    this.getPhoneNumbers = function()
+    this.getContacts = function()
     {
-        if ($window.localStorage.phoneNumbers && $window.localStorage.phoneNumbers !== null) {
-            try {
-                return $window.localStorage.phoneNumbers;
-            } catch (e) {
-                console.log('Problem accessing the local storage');
-            }
+        if ($window.localStorage.contacts && $window.localStorage.contacts !== null) {
+            var contacts =  JSON.parse($window.localStorage.contacts);
+            if(!contacts)
+                contacts = [];
+            return contacts;
         }
         else
         {
@@ -15,39 +14,11 @@ angular.module('secureme.services', []).service('storage', ['$window', function 
         }
     };
     
-    this.setPhoneNumbers = function(numbers)
+    this.setContacts = function(contacts)
     {
-        if(numbers)
+        if(contacts)
         {
-            $windows.localStorage.phoneNumbers = numbers;
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    };
-    
-    this.getMailAddresses = function()
-    {
-        if ($window.localStorage.mailAdresses && $window.localStorage.mailAddresses !== null) {
-            try {
-                return $window.localStorage.mailAddresses;
-            } catch (e) {
-                console.log('Problem accessing the local storage');
-            }
-        }
-        else
-        {
-            return [];
-        }
-    };
-    
-    this.setMailAddresses = function(addresses)
-    {
-        if(addresses)
-        {
-            $windows.localStorage.mailAddresses = addresses;
+            $window.localStorage.contacts = JSON.stringify(contacts);
             return true;
         }
         else

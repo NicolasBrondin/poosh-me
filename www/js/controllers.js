@@ -5,8 +5,7 @@ angular.module('secureme.controllers', [])
     $scope.newPhone='';
     $scope.init = function()
     {
-        $scope.numbers = storage.getPhoneNumbers();
-        $scope.mails = storage.getMailAddresses();
+        $scope.contacts = storage.getContacts();
     }();
     
     
@@ -47,11 +46,14 @@ angular.module('secureme.controllers', [])
 
 .controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout) {
      $scope.newContact = {key:'call'};
-     $scope.contacts=[
+     $scope.contacts=storage.getContacts();
+    console.log($scope.contacts);
+         
+       /*  [
          {key:"call",value:"0610386151"},
          {key:"sms",value:"0617886725"},
          {key:"mail",value:"MrBrondinNicolas@gmail.com"}
-    ];
+    ];*/
 
     $scope.toDeleteCallback = function(id)
     {
@@ -72,6 +74,7 @@ angular.module('secureme.controllers', [])
          console.log(index);
          $timeout.cancel($scope.contacts[index].timer);
          $scope.contacts.splice(index,1);
+         storage.setContacts($scope.contacts);
      };
     
     $scope.add = function()
@@ -79,6 +82,7 @@ angular.module('secureme.controllers', [])
         $scope.contacts.push($scope.newContact);
         $scope.newContact = {key:'call'};
         console.log($scope.contacts);
+        storage.setContacts($scope.contacts);
     };
 })
 
