@@ -2,19 +2,21 @@
     <ion-content class="padding center" >
         <div class="help"><a href="#/" class="icon ion-android-arrow-back validate"></a>+ pour ajouter, appui long pour supprimer</div>
         <div class="contacts plus" ng-if="plus">
-            <h2>Nouveau contact:</h2>
-            <div class="contact" >
-                <div class="contact-key" ng-click="newContact.key='call'" ng-class="{'call':newContact.key=='call'}"><span class="icon ion-ios-telephone"></span></div> 
-                <div class="contact-key" ng-click="newContact.key='sms'" ng-class="{'sms':newContact.key=='sms'}"><span class="icon ion-email"></span></div> 
-                <div class="contact-key" ng-click="newContact.key='mail'" ng-class="{'mail':newContact.key=='mail'}"><span class="ion-at"></span></div>
-            </div>
-            <div class="contact">
-                <div class="contact-value">
-                    <input type="text" placeholder="0612345678" ng-model="newContact.value" ng-if="newContact.key!='mail'"/>
-                    <input type="email" placeholder="john.doe@mail.com" ng-model="newContact.value" ng-if="newContact.key=='mail'"/>
+            <form ng-submit="add()">
+                <h2>Nouveau contact:</h2>
+                <div class="contact" >
+                    <div class="contact-key" ng-click="newContact.key='call'" ng-class="{'call':newContact.key=='call'}"><span class="icon ion-ios-telephone"></span></div> 
+                    <div class="contact-key" ng-click="newContact.key='sms'" ng-class="{'sms':newContact.key=='sms'}"><span class="icon ion-email"></span></div> 
+                    <div class="contact-key" ng-click="newContact.key='mail'" ng-class="{'mail':newContact.key=='mail'}"><span class="ion-at"></span></div>
                 </div>
-                <div class="contact-key" on-tap="add()">OK</div>
-            </div>
+                <div class="contact">
+                    <div class="contact-value">
+                        <input type="text" placeholder="0612345678" ng-model="newContact.value" ng-if="newContact.key!='mail'"/>
+                        <input type="email" placeholder="john.doe@mail.com" ng-model="newContact.value" ng-if="newContact.key=='mail'"/>
+                    </div>
+                    <div class="contact-key" on-tap="add()">OK</div>
+                </div>
+            </form>
         </div>
         <div class="contacts">
             <div ng-repeat="contact in contacts" class="contact">

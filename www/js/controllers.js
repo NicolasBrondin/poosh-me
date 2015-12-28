@@ -1,11 +1,13 @@
 angular.module('secureme.controllers', [])
 
-.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage) {
+.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout,$cordovaGeolocation) {
     
     $scope.newPhone='';
+    $scope.alertMessage = "J'ai besoin d'aide, vite!";
     $scope.init = function()
     {
         $scope.contacts = storage.getContacts();
+        //console.log(window.plugins);
     }();
     
     
@@ -21,27 +23,68 @@ angular.module('secureme.controllers', [])
         }
     }
     
+    $scope.reset = function()
+    {
+        $scope.pending = false;
+        $scope.success = false;
+    }
+    
+    $scope.prepareAlert = function()
+    {
+        $scope.pending = true;
+        $scope.timer = $timeout($scope.sendAlert,3000);
+    };
+    
+    $scope.cancelAlert = function()
+    {
+        $scope.pending = false;
+        $timeout.cancel($scope.timer);
+    };
+    
+    $scope.call = function()
+    {
+        window.plugins.CallNumber.callNumber(function(){}, function(){}, "0610386151", true);
+    };
+    
+    $scope.sendAlert = function()
+    {
+        $scope.prepareMessage();
+        $scope.pending = false;
+        $scope.success=true;
+    };
+    
+    $scope.prepareMessage = function()
+    {
+        $cordovaGeolocation.getCurrentPosition().then(function (position) {
+            $scope.location = {lat : position.coords.latitude,long :  position.coords.longitude};
+            $scope.alertMessage="J'ai besoin d'aide, je suis ici: "+$scope.location.lat+","+$scope.location.long;
+            $scope.sendSMS();
+            $scope.call();
+        }, function(err) {
+            console.error(err);
+        });
+        
+    };  
+    
     $scope.sendSMS = function()
     {
-        console.log("sending SMS...");
         $ionicPlatform.ready(function() {
-        $cordovaSms.send('0610386151', 'SMS content', {})
-      .then(function() {
-        console.log("success");
-      }, function(error) {
-        console.error(error);
-      });
+            $scope.contacts.forEach(function(item, index, array){
+                if(item.key=="sms")
+                {
+                    console.log("Sending SMS to "+item.value+"...");
+                    $cordovaSms.send(item.value, $scope.alertMessage, {})
+                    .then(function() {
+                        console.log("SMS successfully sent to "+item.value+"!");
+                    }, function(error) {
+                        console.error(error);
+                    });
+                }
+            });
         });
     };
     
-    $scope.settings = function()
-    {
-        $scope.open = !$scope.open;
-        if($scope.open)
-            $scope.state = 'settings';
-        else
-            $scope.state = 'idle';
-    }
+    
 })
 
 .controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout) {

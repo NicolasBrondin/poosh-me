@@ -30,7 +30,17 @@ ion-content
     
 }
 
-.menu-button:hover
+.menu-button-pending
+{
+    background: #f39c12;
+}
+
+.menu-button-success
+{
+    background: #27ae60;
+}
+
+.menu-button:activated
 {
     background: #c0392b;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
