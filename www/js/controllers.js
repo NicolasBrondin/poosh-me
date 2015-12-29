@@ -2,26 +2,11 @@ angular.module('secureme.controllers', [])
 
 .controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout,$cordovaGeolocation) {
     
-    $scope.newPhone='';
-    $scope.alertMessage = "J'ai besoin d'aide, vite!";
     $scope.init = function()
     {
         $scope.contacts = storage.getContacts();
         //console.log(window.plugins);
     }();
-    
-    
-    $scope.addPhone = function()
-    {
-        var number = $scope.newPhone;
-        if(""+number.length!=10)
-            alert("Ceci n'est pas un numéro valide!");
-        else
-        {
-            $scope.numbers.push(number);
-            storage.setPhoneNumbers($scope.numbers);
-        }
-    }
     
     $scope.reset = function()
     {
@@ -43,7 +28,11 @@ angular.module('secureme.controllers', [])
     
     $scope.call = function()
     {
-        window.plugins.CallNumber.callNumber(function(){}, function(){}, "0610386151", true);
+        var number = $scope.contacts.find(function(item,index,array){return item.key=="call";});
+        if(number)
+        {    
+            window.plugins.CallNumber.callNumber(function(){}, function(){}, number, true);
+        }
     };
     
     $scope.sendAlert = function()
@@ -56,8 +45,13 @@ angular.module('secureme.controllers', [])
     $scope.prepareMessage = function()
     {
         $cordovaGeolocation.getCurrentPosition().then(function (position) {
-            $scope.location = {lat : position.coords.latitude,long :  position.coords.longitude};
-            $scope.alertMessage="J'ai besoin d'aide, je suis ici: "+$scope.location.lat+","+$scope.location.long;
+            $scope.location = {lat : position.coords.latitude, long :  position.coords.longitude};
+            
+            $scope.alertMessage =  "ALERTE URGENCE\n\n"
+            $scope.alertMessage += "J'ai un problème, besoin d'aide rapidement, voilà ma position GPS:\n\n"
+            $scope.alertMessage += $scope.location.lat+", "+$scope.location.long+"\n\n";
+            $scope.alertMessage += "Ceci est un message automatique Poosh Me";
+            
             $scope.sendSMS();
             $scope.call();
         }, function(err) {
@@ -90,13 +84,6 @@ angular.module('secureme.controllers', [])
 .controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout) {
      $scope.newContact = {key:'sms'};
      $scope.contacts=storage.getContacts();
-    console.log($scope.contacts);
-         
-       /*  [
-         {key:"call",value:"0610386151"},
-         {key:"sms",value:"0617886725"},
-         {key:"mail",value:"MrBrondinNicolas@gmail.com"}
-    ];*/
 
     $scope.toDeleteCallback = function(id)
     {
