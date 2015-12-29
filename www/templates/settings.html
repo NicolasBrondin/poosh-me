@@ -1,13 +1,14 @@
 <ion-view>
     <ion-content class="padding center" >
-        <div class="help"><a href="#/" class="icon ion-android-arrow-back validate"></a>+ pour ajouter, appui long pour supprimer</div>
+        <div class="help"><a href="#/" class="icon ion-android-arrow-back validate"></a>Contacts</div>
         <div class="contacts plus" ng-if="plus">
             <form ng-submit="add()">
                 <h2>Nouveau contact:</h2>
+                <p class="error" ng-if="error">{{error}}</p>
                 <div class="contact" >
-                    <div class="contact-key" ng-click="newContact.key='call'" ng-class="{'call':newContact.key=='call'}"><span class="icon ion-ios-telephone"></span></div> 
                     <div class="contact-key" ng-click="newContact.key='sms'" ng-class="{'sms':newContact.key=='sms'}"><span class="icon ion-email"></span></div> 
-                    <div class="contact-key" ng-click="newContact.key='mail'" ng-class="{'mail':newContact.key=='mail'}"><span class="ion-at"></span></div>
+                    <div class="contact-key" ng-click="newContact.key='call'" ng-class="{'call':newContact.key=='call'}"><span class="icon ion-ios-telephone"></span></div> 
+                    <!--<div class="contact-key" ng-click="newContact.key='mail'" ng-class="{'mail':newContact.key=='mail'}"><span class="ion-at"></span></div>-->
                 </div>
                 <div class="contact">
                     <div class="contact-value">
@@ -19,6 +20,8 @@
             </form>
         </div>
         <div class="contacts">
+            <p ng-if="contacts.length==0">Pour ajouter un contact, appuyez sur le bouton <i class="icon ion-plus-round"></i></p>
+            
             <div ng-repeat="contact in contacts" class="contact">
                 <div class="contact-key call" ng-if="contact.key=='call'"><span class="icon ion-ios-telephone"></span></div>
                 <div class="contact-key sms" ng-if="contact.key=='sms'"><span class="icon ion-email"></div>

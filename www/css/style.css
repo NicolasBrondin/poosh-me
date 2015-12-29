@@ -1,4 +1,4 @@
-@import "http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css";
+@import "font-awesome.min.css";
 
 html, body
 {
@@ -62,13 +62,19 @@ ion-content
 {
     background: #d35400;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    cursor: pointer;
 }
 
 
 
-h1, h2
+h1, h2, p
 {
     color:white;
+}
+
+p
+{
+    font-size: 20px;
 }
 
 
@@ -112,6 +118,8 @@ h1, h2
 .validate
 {
     color:#2ecc71;
+    float: left;
+    margin-left: 20px;
 }
 
 .contacts input
@@ -223,4 +231,14 @@ h1, h2
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius:25px;
+}
+
+.plus .contact-key:hover
+{
+    cursor: pointer;
+}
+
+.error
+{
+   color: #e74c3c;
 }
