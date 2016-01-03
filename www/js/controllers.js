@@ -1,6 +1,6 @@
 angular.module('secureme.controllers', [])
 
-.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout,$cordovaGeolocation) {
+.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout,$interval,$cordovaGeolocation) {
     
     $scope.init = function()
     {
@@ -11,18 +11,29 @@ angular.module('secureme.controllers', [])
     $scope.reset = function()
     {
         $scope.pending = false;
+        $interval.cancel($scope.pendingTimer);
         $scope.success = false;
-    }
+    };
+    
+    $scope.countdown = function()
+    {
+        $scope.pendingTime--;
+        console.log($scope.pendingTime);
+    };
     
     $scope.prepareAlert = function()
     {
         $scope.pending = true;
+        $scope.pendingTime = 3;
+        $scope.pendingTimer = $interval($scope.countdown,1000);
         $scope.timer = $timeout($scope.sendAlert,3000);
     };
     
     $scope.cancelAlert = function()
     {
         $scope.pending = false;
+        $interval.cancel($scope.pendingTimer);
+        $scope.pendingTime = 3;
         $timeout.cancel($scope.timer);
     };
     
@@ -31,7 +42,7 @@ angular.module('secureme.controllers', [])
         var number = $scope.contacts.find(function(item,index,array){return item.key=="call";});
         if(number)
         {    
-            window.plugins.CallNumber.callNumber(function(){}, function(){}, number, true);
+            window.plugins.CallNumber.callNumber(function(){}, function(error){console.error(error);}, number, true);
         }
     };
     
@@ -39,6 +50,8 @@ angular.module('secureme.controllers', [])
     {
         $scope.prepareMessage();
         $scope.pending = false;
+        $interval.cancel($scope.pendingTimer);
+        $scope.pendingTime = 3;
         $scope.success=true;
     };
     
