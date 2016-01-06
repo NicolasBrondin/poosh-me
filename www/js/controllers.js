@@ -1,29 +1,26 @@
 angular.module('secureme.controllers', [])
 
 .controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout,$interval,$cordovaGeolocation) {
-    
+    $scope.state = 'idle';
     $scope.init = function()
     {
         $scope.contacts = storage.getContacts();
-        //console.log(window.plugins);
     }();
     
     $scope.reset = function()
     {
-        $scope.pending = false;
+        $scope.state = 'idle';
         $interval.cancel($scope.pendingTimer);
-        $scope.success = false;
     };
     
     $scope.countdown = function()
     {
         $scope.pendingTime--;
-        console.log($scope.pendingTime);
     };
     
     $scope.prepareAlert = function()
     {
-        $scope.pending = true;
+        $scope.state='pending';
         $scope.pendingTime = 3;
         $scope.pendingTimer = $interval($scope.countdown,1000);
         $scope.timer = $timeout($scope.sendAlert,3000);
@@ -31,7 +28,7 @@ angular.module('secureme.controllers', [])
     
     $scope.cancelAlert = function()
     {
-        $scope.pending = false;
+        $scope.state = 'idle';
         $interval.cancel($scope.pendingTimer);
         $scope.pendingTime = 3;
         $timeout.cancel($scope.timer);
@@ -49,10 +46,9 @@ angular.module('secureme.controllers', [])
     $scope.sendAlert = function()
     {
         $scope.prepareMessage();
-        $scope.pending = false;
+        $scope.state = 'success';
         $interval.cancel($scope.pendingTimer);
         $scope.pendingTime = 3;
-        $scope.success=true;
     };
     
     $scope.prepareMessage = function()

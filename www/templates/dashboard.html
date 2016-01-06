@@ -1,12 +1,12 @@
 <ion-view>
     <ion-content class="padding center" >
-        <div class="help" ng-if="!pending && !success">Double tap pour envoyer une alerte</div>
-        <div class="help" ng-if="pending">Tapez pour annuler l'envoi</div>
-        <div class="help" ng-if="success">Alerte envoyée!</div>
+        <div class="help" ng-if="state=='idle'">Double tap pour envoyer une alerte</div>
+        <div class="help" ng-if="state=='pending'">Tapez pour annuler l'envoi</div>
+        <div class="help" ng-if="state=='success'">Alerte envoyée!</div>
         <br>
-        <button class="menu-button icon fa fa-hand-o-down" on-double-tap="prepareAlert()" ng-if="!pending && !success"></button>
-        <button class="menu-button menu-button-pending icon" on-tap="cancelAlert()" ng-if="pending">{{pendingTime}}</button>
-        <button class="menu-button menu-button-success icon ion-checkmark-round" on-tap="reset()" ng-if="success"></button>
+        <button class="menu-button icon fa fa-hand-o-down" on-double-tap="prepareAlert()" ng-if="state=='idle'"></button>
+        <button class="menu-button menu-button-pending icon" on-tap="cancelAlert()" ng-if="state=='pending'">{{pendingTime}}</button>
+        <button class="menu-button menu-button-success icon ion-checkmark-round" on-tap="reset()" ng-if="state=='success'"></button>
         <a href="#/settings" class="settings-button icon ion-gear-a"></a>
    </ion-content>
 </ion-view>
