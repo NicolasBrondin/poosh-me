@@ -1,10 +1,11 @@
 angular.module('secureme.controllers', [])
 
-.controller('DashCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout,$interval,$cordovaGeolocation) {
+.controller('DashCtrl', function($scope,$rootScope,$cordovaSms,$ionicPlatform,storage,$timeout,$interval,$cordovaGeolocation,$location) {
     $scope.state = 'idle';
     $scope.init = function()
     {
-        $scope.contacts = storage.getContacts();
+        $rootScope.contacts = storage.getContacts();
+        console.log($rootScope.contacts);
     }();
     
     $scope.reset = function()
@@ -20,10 +21,17 @@ angular.module('secureme.controllers', [])
     
     $scope.prepareAlert = function()
     {
-        $scope.state='pending';
-        $scope.pendingTime = 3;
-        $scope.pendingTimer = $interval($scope.countdown,1000);
-        $scope.timer = $timeout($scope.sendAlert,3000);
+        if($rootScope.contacts.length==0)
+        {
+            $location.path('/settings');
+        }
+        else
+        {
+            $scope.state='pending';
+            $scope.pendingTime = 3;
+            $scope.pendingTimer = $interval($scope.countdown,1000);
+            $scope.timer = $timeout($scope.sendAlert,3000);
+        }
     };
     
     $scope.cancelAlert = function()
@@ -36,7 +44,7 @@ angular.module('secureme.controllers', [])
     
     $scope.call = function()
     {
-        var number = $scope.contacts.find(function(item,index,array){return item.key=="call";});
+        var number = $rootScope.contacts.find(function(item,index,array){return item.key=="call";});
         if(number)
         {    
             window.plugins.CallNumber.callNumber(function(){}, function(error){console.error(error);}, number, true);
@@ -72,7 +80,7 @@ angular.module('secureme.controllers', [])
     $scope.sendSMS = function()
     {
         $ionicPlatform.ready(function() {
-            $scope.contacts.forEach(function(item, index, array){
+            $rootScope.contacts.forEach(function(item, index, array){
                 if(item.key=="sms")
                 {
                     console.log("Sending SMS to "+item.value+"...");
@@ -90,41 +98,41 @@ angular.module('secureme.controllers', [])
     
 })
 
-.controller('SettingsCtrl', function($scope,$cordovaSms,$ionicPlatform,storage,$timeout) {
+.controller('SettingsCtrl', function($scope,$rootScope,$cordovaSms,$ionicPlatform,storage,$timeout) {
      $scope.newContact = {key:'sms'};
-     $scope.contacts=storage.getContacts();
+     $rootScope.contacts=storage.getContacts();
 
     $scope.toDeleteCallback = function(id)
     {
-         if($scope.contacts[id])
+         if($rootScope.contacts[id])
          {
-             $scope.contacts[id].delete = false;
+             $rootScope.contacts[id].delete = false;
          }
     };
 
     $scope.toDelete = function(index)
      {
-         $scope.contacts[index].delete = true;
-         $scope.contacts[index].timer = $timeout($scope.toDeleteCallback,3000,true,index);
+         $rootScope.contacts[index].delete = true;
+         $rootScope.contacts[index].timer = $timeout($scope.toDeleteCallback,3000,true,index);
      };
 
      $scope.delete = function(index)
      {
          console.log(index);
          $timeout.cancel($scope.contacts[index].timer);
-         $scope.contacts.splice(index,1);
+         $rootScope.contacts.splice(index,1);
          storage.setContacts($scope.contacts);
      };
     
     $scope.add = function()
     {
-        if($scope.contacts.find(function(item,index,array){return item.key=="call";})&&$scope.newContact.key=="call")
+        if($rootScope.contacts.find(function(item,index,array){return item.key=="call";})&&$scope.newContact.key=="call")
         {
             
             $scope.error = "Vous ne pouvez appeler qu'un seul numéro à la fois";
             $timeout(function(){$scope.error=undefined;},3000);
         }
-        else if($scope.contacts.find(function(item,index,array){return item.key==$scope.newContact.key&&item.value==$scope.newContact.value;}))
+        else if($rootScope.contacts.find(function(item,index,array){return item.key==$scope.newContact.key&&item.value==$scope.newContact.value;}))
         {
             $scope.error = "Vous ne pouvez pas ajouter deux fois le même contact";
             $timeout(function(){$scope.error=undefined;},3000);
@@ -143,10 +151,10 @@ angular.module('secureme.controllers', [])
             }
             if($scope.newContact.key!="mail" && $scope.newContact.value.match(/^[+]?[0-9]+$/))
             {
-                $scope.contacts.push($scope.newContact);
+                $rootScope.contacts.push($scope.newContact);
                 $scope.newContact = {key:'sms'};
                 console.log($scope.contacts);
-                storage.setContacts($scope.contacts);
+                storage.setContacts($rootScope.contacts);
             }
             else
             {

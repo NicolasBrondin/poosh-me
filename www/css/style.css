@@ -3,12 +3,12 @@
 html, body
 {
     color:white;
+    height: 100%;
 }
 
 ion-nav-bar,ion-view
 {
     border:none;
-    background: none;
     box-shadow: none;
 }
 
@@ -17,6 +17,13 @@ ion-content
     text-align: center;
     background: #213242;
     border:none;
+    height: 100%;
+    overflow: hidden;
+}
+
+.overflow-scroll
+{
+    overflow-y: hidden;
 }
 
 .menu-button
