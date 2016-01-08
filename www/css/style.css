@@ -85,8 +85,10 @@ p
 .contact
 {
     height: 50px;
+    overflow: hidden;
     margin:10px;
     font-size: 20px;
+    float: none;
 }
 
 .contact-key
@@ -112,6 +114,7 @@ p
     height: 100%;
     line-height: 50px;
     margin-left: 5px;
+    max-width: calc(100% - 70px);
 }
 
 .validate
@@ -124,9 +127,11 @@ p
 .contacts input
 {
     background:  #2c3e50;
-    font-size: 25px;
+    font-size: 1em;
     height: 100%;
-    
+    width:100%;
+    margin: 0;
+    color:white;
 }
 
 .help
@@ -139,6 +144,8 @@ p
     padding-top: 20px;
     padding-bottom: 20px;
     border-radius: 2em;
+    padding-left:2em;
+    padding-right:2em;
 }
 
 .call
@@ -156,6 +163,23 @@ p
     background: #2980b9;
 }
 
+@media all and (max-width:1000px)
+{
+    .help,h2
+    {
+
+        font-size: 1.5em;
+    }
+}
+
+@media all and (max-width:800px)
+{
+    .help
+    {
+
+        //font-size: 1em;
+    }
+}
 @media all and (orientation:portrait) {
     
     .menu-button
@@ -184,14 +208,34 @@ p
     
     .contact-value
     {
-        max-width: 80%;
-        overflow-x: hidden;
-        overflow-y: hidden;
+        
     }
         
 
 }
 @media all and (orientation:landscape) {
+        .menu-button
+    {
+        width: 50vh;
+        height: 50vh;
+        top: calc(50% - 25vh);
+        left: calc(50% - 25vh);
+        font-size: 25vh;
+    }
+    
+    .settings-button
+    {
+        width: 20vh;
+        height: 20vh;
+        top: calc(80% - 10vh);
+        left: calc(90% - 10vh);
+        font-size: 10vh;
+        line-height: 20vh;
+    }
+}
+
+
+@media all and (orientation:landscape) and (min-width:800px){
 
     .menu-button
     {
@@ -229,6 +273,7 @@ p
     background: rgba(0,0,0,0.1);
     padding-top: 5px;
     padding-bottom: 5px;
+    margin-bottom: 10px;
     border-radius:25px;
 }
 
